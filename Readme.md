@@ -10,6 +10,12 @@ I wanted a simple way to bundle up all my WebComponents and place them into my h
 
 Hopefully someone else finds it handy.
 
+### How to Build
+
+Install Go
+
+`go build gornament.go` 
+
 ### Usage
 
 In your project dir 
