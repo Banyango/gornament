@@ -23,7 +23,7 @@ In your project dir
 
 -> gornament will look in
  - ./components for html templates.
- - ./templates for the html to add bundle to.
+ - ./templates for the html to add bundle to. Add {{ .Templates }} in the `<head>` of your html page.
  
  -> gornament will output the html in ./
  
