@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"github.com/labstack/gommon/log"
 	"io/ioutil"
+	"net/url"
 	"os"
+	"path"
 	"path/filepath"
 	"text/template"
 )
@@ -74,6 +76,12 @@ func main() {
 	}
 
 	if *mapUrlPtr != "" {
+		parse, err := url.Parse(*mapUrlPtr)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		file, err := os.Create(filepath.Join(dir, "public", "sitemap.txt"))
 
 		if err != nil {
@@ -81,8 +89,13 @@ func main() {
 		}
 
 		for _, t := range templates {
+			temp := *parse
+			temp.Path = path.Join(parse.Path, t.Name)
+			_, err := file.WriteString(fmt.Sprint(temp.String(), "\n"))
 
-			file.WriteString(fmt.Sprint(filepath.Join(*mapUrlPtr, t.Name), "\n"))
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 
 		file.Close()
