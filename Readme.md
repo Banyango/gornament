@@ -25,7 +25,10 @@ In your project dir
  - ./components for html templates.
  - ./templates for the html to add bundle to. Add {{ .Templates }} in the `<head>` of your html page.
  
- -> gornament will output the html in ./
+ -> gornament will output the html in ./public
+ 
+ ##### Other Options
+ `-mapurl=<urlbase> : This will generate a sitemap.txt for your site.` 
  
 ### Example
 

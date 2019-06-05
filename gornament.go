@@ -2,6 +2,8 @@ package main
 
 import (
 	"bufio"
+	"flag"
+	"fmt"
 	"github.com/labstack/gommon/log"
 	"io/ioutil"
 	"os"
@@ -20,6 +22,10 @@ type Data struct{
 }
 
 func main() {
+
+	mapUrlPtr := flag.String("mapurl", "", "your url for sitemap")
+
+	flag.Parse()
 
 	var files []string
 	
@@ -61,6 +67,26 @@ func main() {
 		return nil
 	});
 
+	dir, err := os.Getwd()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if *mapUrlPtr != "" {
+		file, err := os.Create(filepath.Join(dir, "public", "sitemap.txt"))
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		for _, t := range templates {
+
+			file.WriteString(fmt.Sprint(filepath.Join(*mapUrlPtr, t.Name), "\n"))
+		}
+
+		file.Close()
+	}
 
 	for _, t := range templates {
 		tmpl := template.Must(template.New(t.Name).ParseFiles(t.Path))
@@ -77,7 +103,7 @@ func main() {
 			}
 		}
 
-		file, err := os.Create(t.Name)
+		file, err := os.Create(filepath.Join(dir, "public", t.Name))
 
 		if err != nil {
 			log.Fatal(err)
@@ -92,7 +118,6 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-
 
 		err = writer.Flush()
 
