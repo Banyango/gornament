@@ -1,1 +1,2 @@
-http:/www.example.com/index.html
+https://www.example.com/index.html
+https://www.example.com/pets.html
